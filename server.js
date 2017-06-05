@@ -67,7 +67,7 @@ app.post('/register', function(req, res) {
     } else {
       console.log('connected to db');
       console.log(req.body.task);
-      connection.query("INSERT INTO todoTable ( task, complete ) values ( $1, $2 )", [req.body.taskName, false]);
+      connection.query("INSERT INTO todoTable ( task) values ( $1)", [req.body.taskName]);
       done();
       res.send(200);
     } // end no error
