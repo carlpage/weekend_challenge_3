@@ -1,6 +1,5 @@
 $(document).ready(function() {
   listTasks();
-
   //toggles text box
   $(".fa-plus").click(function() {
     $("input[type='text'").fadeToggle();
@@ -11,6 +10,7 @@ $(document).ready(function() {
 
   //complete task
   $("ul").on("click", "li", function() {
+
     var getId = {
       id: $(this).attr('id')
     };
@@ -43,7 +43,6 @@ $(document).ready(function() {
           listTasks();
         } //end success
       }); //end Ajax
-      // $(this).remove();
     });
     event.stopPropagation();
   });
@@ -84,23 +83,6 @@ $(document).ready(function() {
       } // end success
     }); //end ajax
   };
-
-  // function completeTask() {
-  //   console.log('in completeTask on click');
-  //   var todo = {
-  //     id: $(this).attr('id')
-  //   };
-  //   console.log(id);
-  //   $.ajax({
-  //     type: 'POST',
-  //     url: '/newTasks',
-  //     data: id,
-  //     success: function(response) {
-  //       console.log(response);
-  //       listTasks();
-  //     } //end success
-  //   }); //end Ajax
-  // }
 
 }); // end document.ready
 
