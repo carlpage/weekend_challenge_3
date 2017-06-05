@@ -10,7 +10,6 @@ $(document).ready(function() {
 
   //complete task
   $("ul").on("click", "li", function() {
-
     var getId = {
       id: $(this).attr('id')
     };
@@ -47,6 +46,7 @@ $(document).ready(function() {
     event.stopPropagation();
   });
 
+
   function listTasks() {
     $.ajax({
       url: '/newTasks',
@@ -72,6 +72,7 @@ $(document).ready(function() {
     var todoText = {
       taskName: $('#add-item').val()
     };
+    $("input[type='text']").val('');
     console.log(todoText + "Hello World");
     $.ajax({
       url: '/register',
@@ -85,6 +86,3 @@ $(document).ready(function() {
   };
 
 }); // end document.ready
-
-// need to modify registerOwner to get it to post new task onto page
-// get info to post from DB to client-side, then get complete and delete functionalities working
