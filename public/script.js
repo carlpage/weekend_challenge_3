@@ -27,25 +27,25 @@ $(document).ready(function() {
 
   //click on trash bin to delete
   $("ul").on("click", "span", function(event) {
-    $(this).parent().fadeOut(500, function() {
-      console.log('in completeTask on click');
-      var getId = {
-        id: $(this).attr('id')
-      };
-      console.log(getId);
-      $.ajax({
-        type: 'DELETE',
-        url: '/newTasks',
-        data: getId,
-        success: function(response) {
-          console.log(response);
-          listTasks();
-        } //end success
-      }); //end Ajax
-    });
-    event.stopPropagation();
-  });
+      $(this).parent().fadeOut(500, function() {
+        console.log('in completeTask on click');
+        var getId = {
+          id: $(this).attr('id')
+        };
+        console.log(getId);
+        $.ajax({
+          type: 'DELETE',
+          url: '/newTasks',
+          data: getId,
+          success: function(response) {
+            console.log(response);
+            listTasks();
+          } //end success
+        }); //end Ajax
+      });
+      event.stopPropagation();
 
+  });
 
   function listTasks() {
     $.ajax({
@@ -58,7 +58,8 @@ $(document).ready(function() {
           var taskThing = response[i].task;
           var id = response[i].id;
           console.log('new task: ', taskThing);
-          $("ul").append("<li id=" + id + "><span><i class='fa fa-trash'></i></span> " + taskThing + "</li>");
+          var toAppend = "<li id=" + id + "><span><i class='fa fa-trash'></i></span> " + taskThing + "</li>";
+          $("ul").append(toAppend);
           if (response[i].complete === true) {
             $("#" + id).toggleClass("completed"); // puts line through the listed item if completed is returned true
           }
