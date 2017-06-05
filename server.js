@@ -45,7 +45,7 @@ app.get('/newTasks', function(req, res) {
     } else {
       console.log('connected to todo DB');
       var taskNames = [];
-      var resultSet = connection.query("SELECT * FROM todoTable");
+      var resultSet = connection.query("SELECT * FROM todoTable ORDER BY id ASC");
       resultSet.on('row', function(row) {
         taskNames.push(row);
       }); //end
@@ -77,16 +77,16 @@ app.post('/register', function(req, res) {
 app.post('/newTasks', function(req, res) {
   console.log('Post hit');
   console.log(req.body);
-  var id = req.body.taskName;
-  console.log(req.body.taskName);
+  var id = req.body.id;
+  console.log(id);
   pool.connect(function(err, connection, done) {
     if (err) {
       console.log('error in connection', err);
       done();
       res.send(400);
     } else {
-      var listInfo = connection.query("UPDATE todoTable SET complete = 'true' WHERE" +
-        "(name = '" + taskName + "')");
+      connection.query("UPDATE todoTable SET complete = true WHERE" +
+        " id = '" + id + "';");
       done();
       res.send('successful update');
     }

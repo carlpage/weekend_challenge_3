@@ -1,9 +1,7 @@
 $(document).ready(function() {
   listTasks();
-  $("ul").on("click", "li", function() {
-    $(this).toggleClass("completed");
-    // completeTask();
-  });
+  // $("ul").on("click", "li", completeTask);
+  // completeTask();
 
   //click on x to delete function
   $("ul").on("click", "span", function(event) {
@@ -19,6 +17,22 @@ $(document).ready(function() {
 
   $(".fa-plus").click(function() {
     $("input[type='text'").fadeToggle();
+  });
+
+  $("ul").on("click", "li", function() {
+    var getId = {
+      id: $(this).attr('id')
+    }
+    console.log(getId);
+    $.ajax({
+      type: 'POST',
+      url: '/newTasks',
+      data: getId,
+      success: function(response) {
+        console.log(response);
+        listTasks();
+      } //end success
+    }); //end Ajax
   });
 
   function listTasks() {
@@ -58,22 +72,22 @@ $(document).ready(function() {
     }); //end ajax
   };
 
-  function completeTask() {
-    console.log('in completeTask on click');
-    var todo = {
-      taskName: $('#add-item').val()
-    };
-    $.ajax({
-      type: 'POST',
-      url: '/newTasks',
-      data: todo,
-      success: function(response) {
-        console.log(response);
-        listTasks();
-        $(this).toggleClass("completed");
-      } //end success
-    }); //end Ajax
-  }
+  // function completeTask() {
+  //   console.log('in completeTask on click');
+  //   var todo = {
+  //     id: $('li').attr('id')
+  //   };
+  //   console.log(id);
+  //   $.ajax({
+  //     type: 'POST',
+  //     url: '/newTasks',
+  //     data: id,
+  //     success: function(response) {
+  //       console.log(response);
+  //       listTasks();
+  //     } //end success
+  //   }); //end Ajax
+  // }
 
   // function deleteTask() {
   //   console.log('in deleteTask on click');
