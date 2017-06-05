@@ -1,28 +1,19 @@
 $(document).ready(function() {
   listTasks();
-  // $("ul").on("click", "li", completeTask);
-  // completeTask();
 
-  //click on x to delete function
-  $("ul").on("click", "span", function(event) {
-    $(this).parent().fadeOut(500, function() {
-      $(this).remove();
-      // insert function that deletes from DB
-    });
-    event.stopPropagation();
-  });
-
-  $("#submit").on('click', registerTask);
-  //grabbing new todo text from input
-
+  //toggles text box
   $(".fa-plus").click(function() {
     $("input[type='text'").fadeToggle();
   });
 
+  //grabbing new todo text from input
+  $("#submit").on('click', registerTask);
+
+  //complete task
   $("ul").on("click", "li", function() {
     var getId = {
       id: $(this).attr('id')
-    }
+    };
     console.log(getId);
     $.ajax({
       type: 'POST',
@@ -33,6 +24,28 @@ $(document).ready(function() {
         listTasks();
       } //end success
     }); //end Ajax
+  });
+
+  //click on trash bin to delete
+  $("ul").on("click", "span", function(event) {
+    $(this).parent().fadeOut(500, function() {
+      console.log('in completeTask on click');
+      var getId = {
+        id: $(this).attr('id')
+      };
+      console.log(getId);
+      $.ajax({
+        type: 'DELETE',
+        url: '/newTasks',
+        data: getId,
+        success: function(response) {
+          console.log(response);
+          listTasks();
+        } //end success
+      }); //end Ajax
+      // $(this).remove();
+    });
+    event.stopPropagation();
   });
 
   function listTasks() {
@@ -75,7 +88,7 @@ $(document).ready(function() {
   // function completeTask() {
   //   console.log('in completeTask on click');
   //   var todo = {
-  //     id: $('li').attr('id')
+  //     id: $(this).attr('id')
   //   };
   //   console.log(id);
   //   $.ajax({
@@ -89,13 +102,7 @@ $(document).ready(function() {
   //   }); //end Ajax
   // }
 
-  // function deleteTask() {
-  //   console.log('in deleteTask on click');
-  //
-  // }
-
 }); // end document.ready
-
 
 // need to modify registerOwner to get it to post new task onto page
 // get info to post from DB to client-side, then get complete and delete functionalities working

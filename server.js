@@ -45,7 +45,7 @@ app.get('/newTasks', function(req, res) {
     } else {
       console.log('connected to todo DB');
       var taskNames = [];
-      var resultSet = connection.query("SELECT * FROM todoTable ORDER BY id ASC");
+      var resultSet = connection.query("SELECT * FROM todoTable");
       resultSet.on('row', function(row) {
         taskNames.push(row);
       }); //end
@@ -93,18 +93,18 @@ app.post('/newTasks', function(req, res) {
   });
 });
 
-// app.delete('/list', function(req, res) {
-//   pool.connect(function(err, connection, done) {
-//     console.log('Post hit');
-//     console.log(req.body);
-//     var id = req.body.id;
-//     if (err) {
-//       console.log('error in connection', err);
-//       done();
-//       res.send(400);
-//     } else {
-//       connection.query("DELETE FROM todoList WHERE (id = '" + id + "')");
-//       res.send('deleted');
-//     }
-//   });
-// });
+app.delete('/newTasks', function(req, res) {
+  pool.connect(function(err, connection, done) {
+    console.log('Post hit');
+    console.log(req.body);
+    var id = req.body.id;
+    if (err) {
+      console.log('error in connection', err);
+      done();
+      res.send(400);
+    } else {
+      connection.query("DELETE FROM todoTable WHERE id = '" + id + "';");
+      res.send('deleted');
+    }
+  });
+});
